@@ -24,7 +24,7 @@ class XliffFileDumper extends FileDumper
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, $domain, array $options = [])
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
     {
         $xliffVersion = '1.2';
         if (\array_key_exists('xliff_version', $options)) {
@@ -150,11 +150,11 @@ class XliffFileDumper extends FileDumper
         foreach ($messages->all($domain) as $source => $target) {
             $translation = $dom->createElement('unit');
             $translation->setAttribute('id', strtr(substr(base64_encode(hash('sha256', $source, true)), 0, 7), '/+', '._'));
-            $name = $source;
-            if (\strlen($source) > 80) {
-                $name = substr(md5($source), -7);
+
+            if (\strlen($source) <= 80) {
+                $translation->setAttribute('name', $source);
             }
-            $translation->setAttribute('name', $name);
+
             $metadata = $messages->getMetadata($source, $domain);
 
             // Add notes section

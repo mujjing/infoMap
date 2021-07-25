@@ -14,7 +14,7 @@ class CreateInfomapTable extends Migration
     public function up()
     {
         Schema::create('map', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('Address')->nullable()->comment('주소');
             $table->string('Location')->nullable()->comment('위치명');
             $table->double('Latitude')->unsigned()->nullable()->comment('위도');
